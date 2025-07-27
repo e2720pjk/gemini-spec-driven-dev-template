@@ -52,10 +52,10 @@ This document explains how to use the Gemini Spec-Driven Development framework.
 
 ## Command Summary
 
--   `gemini steering`: Analyzes the project and generates/updates core steering documents (`product.md`, `tech.md`, `structure.md`).
+-   `gemini steering`: Analyzes the project and generates/updates core steering documents (`product.toml`, `tech.toml`, `structure.toml`).
     -   **Example**: `gemini steering`
 -   `gemini steering-custom <document_name> "<topic_purpose>" "<initial_content>"`: Creates custom steering documents for specialized contexts.
-    -   **Example**: `gemini steering-custom "api-standards.md" "Guidelines for RESTful API design" "# API Standards\n\n- Use RESTful principles\n- Version APIs\n- Handle errors consistently"`
+    -   **Example**: `gemini steering-custom "api-standards.toml" "Guidelines for RESTful API design" "# API Standards\n\n- Use RESTful principles\n- Version APIs\n- Handle errors consistently"`
 -   `gemini spec-init <feature_name>`: Initializes a new feature spec.
     -   **Example**: `gemini spec-init "User Profile Management"`
 -   `gemini spec-requirements <feature_name> "<description>"`: Generates requirements.

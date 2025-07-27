@@ -1,3 +1,5 @@
+description = "Shows current status and progress for a feature."
+prompt = """
 Show current status and progress for feature: '{{feature_name}}'.
 
 ## Process
@@ -57,3 +59,4 @@ Show current status and progress for feature: '{{feature_name}}'.
     - Briefly comment on how the current spec aligns with the project's `product.md`, `tech.md`, and `structure.md`.
 
 6.  **Present Report**: Display the generated status report to the user.
+"""

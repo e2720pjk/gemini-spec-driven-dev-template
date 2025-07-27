@@ -1,3 +1,5 @@
+description = "Generates implementation tasks for a feature."
+prompt = """
 Generate the implementation tasks for the '{{feature_name}}' feature.
 
 ## Prerequisites
@@ -36,3 +38,4 @@ Generate the implementation tasks for the '{{feature_name}}' feature.
 3.  **Write Tasks Document**: Write the generated tasks to `.kiro/specs/{{feature_name}}/tasks.md` using Markdown checkboxes (`- [ ]`).
 4.  **Update Spec Status**: Update `spec.json` for '{{feature_name}}' to set `approvals.tasks.generated: true` and `phase: tasks-generated`.
 5.  **Request Approval**: After writing the `tasks.md`, explicitly ask the user to review it and provide approval to start implementation. (e.g., "Please review `tasks.md`. If approved, reply with `Approve tasks`.")
+"""

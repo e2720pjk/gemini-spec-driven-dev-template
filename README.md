@@ -29,6 +29,7 @@ This template provides a structured approach to software development using Gemin
     ```bash
     touch .kiro/steering/product.md .kiro/steering/tech.md .kiro/steering/structure.md
     ```
+4.  **Configure Project Language (Optional)**: The `spec.json` file in each feature's spec directory (`.kiro/specs/[feature-name]/spec.json`) contains a `"language": "japanese"` field. You can change this to your preferred language (e.g., `"english"`, `"traditional chinese"`) to influence the language of generated content. This can be done manually after `spec-init` or by modifying the `spec-init.toml` template.
 
 ### Development Workflow Example: Adding a "User Login" Feature
 
@@ -41,19 +42,19 @@ This template provides a structured approach to software development using Gemin
 
 - **Your Command**: `gemini spec-requirements "User Login Feature" "As a user, I want to log in with my email and password."`
 - **Gemini's Action**: Fills in the `requirements.md` file.
-- **Your Approval**: `Approve requirements`
+- **Your Approval**: Review the generated `requirements.md`. If satisfied, reply with `Approve requirements`.
 
 #### Step 3: Generate Technical Design
 
 - **Your Command**: `gemini spec-design "User Login Feature"`
 - **Gemini's Action**: Generates the technical design in `design.md`.
-- **Your Approval**: `Approve design`
+- **Your Approval**: Review the generated `design.md`. If satisfied, reply with `Approve design`.
 
 #### Step 4: Generate Implementation Tasks
 
 - **Your Command**: `gemini spec-tasks "User Login Feature"`
 - **Gemini's Action**: Creates a task list in `tasks.md`.
-- **Your Approval**: `Approve tasks`
+- **Your Approval**: Review the generated `tasks.md`. If satisfied, reply with `Approve tasks`.
 
 #### Step 5: Implementation
 

@@ -1,3 +1,5 @@
+description = "Generates the technical design for a feature."
+prompt = """
 Generate the technical design for the '{{feature_name}}' feature.
 
 ## Prerequisites
@@ -23,3 +25,4 @@ Generate the technical design for the '{{feature_name}}' feature.
 4.  **Write Design Document**: Write the generated design to `.kiro/specs/{{feature_name}}/design.md`.
 5.  **Update Spec Status**: Update `spec.json` for '{{feature_name}}' to set `approvals.design.generated: true` and `phase: design-generated`.
 6.  **Request Approval**: After writing the `design.md`, explicitly ask the user to review it and provide approval to proceed to the task generation phase. (e.g., "Please review `design.md`. If approved, reply with `Approve design`.")
+"""

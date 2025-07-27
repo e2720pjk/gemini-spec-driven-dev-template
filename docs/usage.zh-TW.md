@@ -12,7 +12,11 @@
     ```bash
     mkdir -p .kiro/steering .kiro/specs
     ```
-3.  **建立指導原則文件**：在 `.kiro/steering/` 目錄下，建立以下三個檔案。您可以先建立空的檔案，然後在開發過程中逐步完善它們，或使用 `steering` 指令來產生它們。
+3.  **建立指導原則文件**：這些基礎文件指導 Gemini 對您專案的理解。**強烈建議使用 `gemini steering` 指令來產生這些檔案**，因為它會智慧地分析您的專案並用初始內容填充它們。
+    ```bash
+    gemini steering
+    ```
+    或者，您可以手動建立空檔案並填寫它們：
     - `product.md`：定義產品目標、目標使用者和核心價值。
     - `tech.md`：定義專案的技術棧、架構和開發環境。
     - `structure.md`：定義專案的目錄結構和程式碼組織慣例。
@@ -55,7 +59,7 @@
 -   `gemini steering`: 分析專案並產生/更新核心指導原則文件（`product.md`, `tech.md`, `structure.md`）。
     -   **範例**：`gemini steering`
 -   `gemini steering-custom <文件名稱> "<主題/目的>" "<初始內容>"`: 為特定情境建立自訂指導原則文件。
-    -   **範例**：`gemini steering-custom "api-standards.md" "RESTful API 設計指南" "# API 標準\n\n- 遵循 RESTful 原則\n- 版本化 API\n- 一致的錯誤處理"`
+    -   **範例**：`gemini steering-custom "api-standards.toml" "RESTful API 設計指南" "# API 標準\n\n- 遵循 RESTful 原則\n- 版本化 API\n- 一致的錯誤處理"`
 -   `gemini spec-init <功能名稱>`：初始化新功能的規格。
     -   **範例**：`gemini spec-init "使用者個人資料管理"`
 -   `gemini spec-requirements <功能名稱> "<需求描述>"`: 產生功能的需求文件。

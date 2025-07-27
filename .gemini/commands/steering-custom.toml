@@ -1,3 +1,5 @@
+description = "Creates custom steering documents for specialized contexts."
+prompt = """
 Create a custom steering document for specialized project contexts.
 
 ## Process
@@ -10,3 +12,4 @@ Create a custom steering document for specialized project contexts.
 3.  **Write Custom Steering Document**: Write the provided content to `.kiro/steering/{{document_name}}`.
 4.  **Confirm Creation**: Inform the user that the custom steering document has been created and provide its path.
 5.  **Suggest Usage**: Remind the user how this custom document can be referenced in future interactions (e.g., "You can reference this document in your prompts using `@.kiro/steering/{{document_name}}`").
+"""
