@@ -1,0 +1,25 @@
+Generate the technical design for the '{{feature_name}}' feature.
+
+## Prerequisites
+
+- **Requirements Approved**: Ensure that the `requirements.md` for '{{feature_name}}' has been reviewed and approved. (Check `spec.json` for `approvals.requirements.approved: true`)
+
+## Process
+
+1.  **Read Requirements**: Read the approved requirements from `.kiro/specs/{{feature_name}}/requirements.md`.
+2.  **Read Steering Documents**: Read the relevant steering documents from `.kiro/steering/` (`product.md`, `tech.md`, `structure.md`).
+3.  **Generate Technical Design**: Based on the approved requirements and steering documents, generate a comprehensive technical design. This should include:
+    - **Overview**: High-level summary of the technical approach.
+    - **Architecture**: System architecture diagrams (using Mermaid syntax), explaining component interactions.
+    - **Technology Stack**: Detailed list of frameworks, libraries, and tools, with rationale for choices.
+    - **Data Models**: Entity Relationship Diagrams (ERD) and data model definitions (e.g., TypeScript interfaces, Python dataclasses, SQL schemas).
+    - **API Endpoints**: Detailed API specifications (method, route, purpose, auth, status codes).
+    - **Data Flow**: Sequence diagrams for key user flows.
+    - **Error Handling**: Strategy for handling errors in both frontend and backend.
+    - **Security Considerations**: Authentication, authorization, data protection, and best practices.
+    - **Performance & Scalability**: Performance targets, caching strategies, and scaling approach.
+    - **Testing Strategy**: Test coverage, approach (unit, integration, E2E), and CI/CD integration.
+
+4.  **Write Design Document**: Write the generated design to `.kiro/specs/{{feature_name}}/design.md`.
+5.  **Update Spec Status**: Update `spec.json` for '{{feature_name}}' to set `approvals.design.generated: true` and `phase: design-generated`.
+6.  **Request Approval**: After writing the `design.md`, explicitly ask the user to review it and provide approval to proceed to the task generation phase. (e.g., "Please review `design.md`. If approved, reply with `Approve design`.")

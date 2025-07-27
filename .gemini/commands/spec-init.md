@@ -1,0 +1,31 @@
+Initialize a new feature specification named '{{feature_name}}'.
+
+1.  Create a directory for the feature in `.kiro/specs/{{feature_name}}`.
+2.  Create a `spec.json` file in the new directory with the following content:
+    ```json
+    {
+      "feature_name": "{{feature_name}}",
+      "project_description": "",
+      "created_at": "{{current_timestamp}}",
+      "updated_at": "{{current_timestamp}}",
+      "language": "japanese",
+      "phase": "initialized",
+      "approvals": {
+        "requirements": {
+          "generated": false,
+          "approved": false
+        },
+        "design": {
+          "generated": false,
+          "approved": false
+        },
+        "tasks": {
+          "generated": false,
+          "approved": false
+        }
+      },
+      "ready_for_implementation": false
+    }
+    ```
+3.  Create empty files: `requirements.md`, `design.md`, `tasks.md` in the new directory.
+4.  Respond with a confirmation message that the feature specification has been initialized.

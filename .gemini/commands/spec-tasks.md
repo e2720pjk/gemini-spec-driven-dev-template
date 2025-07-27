@@ -1,0 +1,38 @@
+Generate the implementation tasks for the '{{feature_name}}' feature.
+
+## Prerequisites
+
+- **Requirements Approved**: Ensure that the `requirements.md` for '{{feature_name}}' has been reviewed and approved. (Check `spec.json` for `approvals.requirements.approved: true`)
+- **Design Approved**: Ensure that the `design.md` for '{{feature_name}}' has been reviewed and approved. (Check `spec.json` for `approvals.design.approved: true`)
+
+## Process
+
+1.  **Read Technical Design**: Read the approved technical design from `.kiro/specs/{{feature_name}}/design.md`.
+2.  **Break Down Tasks**: Break down the design into a detailed list of actionable implementation tasks. Each task should be granular enough to be completed in a reasonable timeframe (e.g., 1-3 hours).
+
+    ### Task Generation Guidelines
+    - **Code-Generation Prompts**: Each task should be a clear prompt for a code-generation LLM, specifying what to create/modify.
+    - **Test-Driven Approach**: Integrate testing into each development task (e.g., "Write tests for X, then implement Y to pass tests").
+    - **Incremental Building**: Tasks should build incrementally, using outputs from previous tasks.
+    - **Requirements Traceability**: Map tasks to specific EARS requirements from `requirements.md` (e.g., `_Requirements: X.X, Y.Y_`).
+    - **Coding-Only Focus**: Exclude non-coding tasks (e.g., user testing, deployment setup).
+    - **Hierarchical Structure**: Use hierarchical numbering (e.g., 1.1, 1.2) for sub-tasks.
+
+    ### Example Task Structure
+    ```markdown
+    # Implementation Plan
+
+    - [ ] 1. Implement User Authentication
+      - [ ] 1.1 Create user model and database schema
+        - Write tests for user model validation
+        - Implement User class with password hashing
+        - _Requirements: 1.1, 1.2_
+      - [ ] 1.2 Implement login API endpoint
+        - Write API tests for login flow
+        - Implement JWT token generation
+        - _Requirements: 1.3_
+    ```
+
+3.  **Write Tasks Document**: Write the generated tasks to `.kiro/specs/{{feature_name}}/tasks.md` using Markdown checkboxes (`- [ ]`).
+4.  **Update Spec Status**: Update `spec.json` for '{{feature_name}}' to set `approvals.tasks.generated: true` and `phase: tasks-generated`.
+5.  **Request Approval**: After writing the `tasks.md`, explicitly ask the user to review it and provide approval to start implementation. (e.g., "Please review `tasks.md`. If approved, reply with `Approve tasks`.")

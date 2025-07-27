@@ -1,0 +1,34 @@
+Generate comprehensive requirements for feature: '{{feature_name}}'.
+
+## Process
+
+1.  **Understand User Request**: Read the user's request for requirements for '{{feature_name}}'.
+2.  **Generate Requirements Document**: Create a comprehensive `requirements.md` document in the language specified in `spec.json` (check `.kiro/specs/{{feature_name}}/spec.json` for "language" field).
+
+    ### Requirements Generation Guidelines
+    - **Focus on Core Functionality**: Start with the essential features from the user's idea.
+    - **Use EARS Format**: All acceptance criteria must use proper EARS syntax (e.g., "WHEN [event/condition] THEN [system] SHALL [response]").
+    - **Hierarchy and Granularity**: Structure requirements with clear hierarchy (e.g., Introduction -> Major Feature Area -> User Story -> Acceptance Criteria).
+    - **Testable Conditions**: Each acceptance criterion should be a testable condition.
+
+    ### Requirements Document Structure
+    ```markdown
+    # Requirements Document
+
+    ## Introduction
+    [Clear introduction summarizing the feature and its business value]
+
+    ## Requirements
+
+    ### Requirement 1: [Major Feature Area]
+    **User Story:** As a [role], I want [feature], so that [benefit]
+
+    #### Acceptance Criteria
+    1. WHEN [event] THEN [system] SHALL [response]
+    2. IF [precondition] THEN [system] SHALL [response]
+    ...
+    ```
+
+3.  **Write to File**: Write the generated requirements to `.kiro/specs/{{feature_name}}/requirements.md`.
+4.  **Update Spec Status**: Update `spec.json` for '{{feature_name}}' to set `approvals.requirements.generated: true` and `phase: requirements-generated`.
+5.  **Request Approval**: Explicitly ask the user to review the `requirements.md` and provide approval to proceed to the design phase. (e.g., "Please review `requirements.md`. If approved, reply with `Approve requirements`.")
