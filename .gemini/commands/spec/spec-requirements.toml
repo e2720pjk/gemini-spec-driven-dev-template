@@ -33,5 +33,5 @@ Generate comprehensive requirements for feature: '{{feature_name}}'.
 
 3.  **Write to File**: Write the generated requirements to `.kiro/specs/{{feature_name}}/requirements.md`.
 4.  **Update Spec Status**: Update `spec.json` for '{{feature_name}}' to set `approvals.requirements.generated: true` and `phase: requirements-generated`.
-5.  **Request Approval**: Explicitly ask the user to review the `requirements.md` and provide approval to proceed to the design phase. (e.g., "Please review `requirements.md`. If approved, reply with `Approve requirements`.")
+5.  **Instruct for Next Step**: Inform the user that `requirements.md` has been generated. Instruct them to review the file and, once they are satisfied, run the `/spec:design {{feature_name}}` command to approve the requirements and proceed to the next phase.
 """

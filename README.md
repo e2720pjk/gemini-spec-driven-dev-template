@@ -1,261 +1,124 @@
-# Gemini Spec-Driven Development Template
+# Gemini Spec-Driven Dev Template
 
-This is a template for setting up a spec-driven development workflow with Gemini.
+> 🌐 **Language**: [English](#english) | [繁體中文](#繁體中文)
 
-## Overview
+---
 
-This template provides a structured approach to software development using Gemini, based on the concept of spec-driven development. It helps ensure that development is aligned with product goals, technical architecture, and project conventions.
+## English
 
-## Getting Started
+### Inspiration and Origin
 
-### Step 0: Project Setup (One-time)
+This project is a re-implementation and adaptation of the concepts from the **`claude-code-spec`** project, designed to bring its powerful spec-driven development workflow into the Gemini CLI ecosystem. The original project demonstrated a robust, Kiro-style, three-phase approval workflow for Claude Code.
 
-1.  **Copy Configuration**: Copy the `.gemini/` directory and its contents to your project's root directory.
+- **Original Project**: [claude-code-spec](https://github.com/gotalab/claude-code-spec) 
+
+Our goal was to replicate that seamless, automated, and reliable development process using the native capabilities of the Gemini CLI, particularly its custom commands and tool execution features.
+
+### Project Overview
+
+`gemini-spec-driven-dev-template` is a starter kit and a powerful extension for the Gemini CLI. It provides a structured, command-driven workflow for software development, guiding you from a high-level feature idea to a detailed implementation plan through a series of automated steps. This ensures consistency, quality, and clear documentation throughout the development lifecycle.
+
+### How to Get Started
+
+1.  **Copy the Extension**: Copy the `.gemini` directory  into your own project's directory.
+2.  **Copy Steering Files**: Copy the `.kiro/steering` directory into your project's `.kiro/` directory to establish the foundational development principles.
+3.  **Initialize a Feature**: Start your first feature specification by running:
     ```bash
-    cp -r /path/to/gemini-spec-driven-dev-template/.gemini/ .
+    /spec:init "A detailed description of the feature you want to build."
     ```
-2.  **Create Kiro Directories**: Create the `.kiro/steering` and `.kiro/specs` directories in your project's root.
+
+### Development Workflow & Command Sequence
+
+Follow this sequence to develop a feature from scratch:
+
+1.  **Initialize (`/spec:init`**):
+    -   **Command**: `/spec:init "[Your detailed feature description]"`
+    -   **Action**: Creates the necessary directory structure and metadata files for your new feature under `.kiro/specs/[feature-name]/`.
+
+2.  **Generate Requirements (`/spec:requirements`**):
+    -   **Command**: `/spec:requirements [feature-name]`
+    -   **Action**: Generates a `requirements.md` file based on your initial description. It then instructs you to review it.
+
+3.  **Generate Design (`/spec:design`**):
+    -   **Command**: `/spec:design [feature-name]`
+    -   **Action**: This command first **implicitly approves the requirements** (updating `spec.json`) and then generates the `design.md` file based on the requirements. It then instructs you to review the design.
+
+4.  **Generate Tasks (`/spec:tasks`**):
+    -   **Command**: `/spec:tasks [feature-name]`
+    -   **Action**: This command **implicitly approves the design** and then generates a detailed `tasks.md` file with a checklist for implementation.
+
+5.  **Check Status (`/spec:status`**):
+    -   **Command**: `/spec:status [feature-name]`
+    -   **Action**: At any point, run this command to get a full report on the feature's progress, including an automated calculation of task completion from `tasks.md`.
+
+### Phase-by-Phase Functionality and Differences from `claude-code-spec`
+
+#### **Progress Tracking**
+
+-   **`claude-code-spec`**: Uses event-driven **Hooks** that automatically trigger in the background after a file is modified to update progress. This is a **proactive, push-based** system.
+-   **This Project (Gemini)**: Implements progress tracking via the `/spec:status` command. A Python script (`calculate_progress.py`) is executed **on-demand (pull-based)** when the command is run. It provides a highly reliable, deterministic calculation of progress without modifying the `spec.json` file, presenting the live status in the generated report.
+
+#### **Specification Drift Detection**
+
+-   **`claude-code-spec`**: Relies on Hooks that could trigger an LLM analysis in the background whenever source code files are changed, providing real-time feedback.
+-   **This Project (Gemini)**: This feature is not currently available.
+
+---
+
+## 繁體中文
+
+### 靈感與起源
+
+本專案是 **`claude-code-spec`** 專案概念的重新實現與改造，旨在將其強大的規格驅動開發工作流程，帶入 Gemini CLI 的生態系統中。原始專案展示了一套為 Claude Code 設計的、基於 Kiro 風格的、穩健的三階段審批工作流程。
+
+- **原始專案**: [claude-code-spec](https://github.com/gotalab/claude-code-spec)
+我們的目標是使用 Gemini CLI 的原生功能，特別是其自訂指令和工具執行能力，來複製那種無縫、自動化且可靠的開發過程。
+
+### 專案簡介
+
+`gemini-spec-driven-dev-template` 是一個為 Gemini CLI 設計的啟動套件與強大的擴充功能。它提供了一套結構化的、由指令驅動的軟體開發工作流程，透過一系列自動化步驟，引導您從一個高層次的功能構想，產出一份詳細的實作計畫。這確保了在整個開發生命週期中的一致性、高品質與清晰的文件紀錄。
+
+### 如何開始
+
+1.  **複製擴充功能**：將 `.gemini/` 資料夾，複製到您自己專案的目錄中。
+2.  **複製指導原則檔案**：將 `.kiro/steering` 目錄複製到您專案的 `.kiro/` 目錄下，以建立基礎的開發原則。
+3.  **初始化一個功能**：執行以下指令來開始您的第一個功能規格：
     ```bash
-    mkdir -p .kiro/steering .kiro/specs
+    /spec:init "在這裡詳細描述您想建立的功能。"
     ```
-3.  **Create Steering Documents**: These foundational documents guide Gemini's understanding of your project. **It is highly recommended to use the `gemini steering` command to generate these files**, as it intelligently analyzes your project and populates them with initial content.
-    ```bash
-    gemini steering
-    ```
-    Alternatively, you can create empty files and fill them manually:
-    - `product.md`: Defines product goals, target users, and core value.
-    - `tech.md`: Defines the tech stack, architecture, and development environment.
-    - `structure.md`: Defines the project's directory structure and code organization conventions.
-    ```bash
-    touch .kiro/steering/product.md .kiro/steering/tech.md .kiro/steering/structure.md
-    ```
-4.  **Configure Project Language (Optional)**: The `spec.json` file in each feature's spec directory (`.kiro/specs/[feature-name]/spec.json`) contains a `"language": "japanese"` field. You can change this to your preferred language (e.g., `"english"`, `"traditional chinese"`) to influence the language of generated content. This can be done manually after `spec-init` or by modifying the `spec-init.toml` template.
 
-### Development Workflow Example: Adding a "User Login" Feature
+### 開發工作流程與指令順序
 
-#### Step 1: Initialize the Spec
+請遵循以下順序來從頭開發一個新功能：
 
-- **Your Command**: `gemini spec-init "User Login Feature"`
-- **Gemini's Action**: Creates the necessary files and directories for the new feature spec.
+1.  **初始化 (`/spec:init`**):
+    -   **指令**: `/spec:init "[您功能的詳細描述]"`
+    -   **作用**: 在 `.kiro/specs/[feature-name]/` 路徑下，為您的新功能建立必要的目錄結構和元數據檔案。
 
-#### Step 2: Define Requirements
+2.  **產生需求 (`/spec:requirements`**):
+    -   **指令**: `/spec:requirements [feature-name]`
+    -   **作用**: 根據您的初始描述產生一份 `requirements.md` 檔案，並指示您進行審閱。
 
-- **Your Command**: `gemini spec-requirements "User Login Feature" "As a user, I want to log in with my email and password."`
-- **Gemini's Action**: Fills in the `requirements.md` file.
-- **Your Approval**: Review the generated `requirements.md`. If satisfied, reply with `Approve requirements`.
+3.  **產生設計 (`/spec:design`**):
+    -   **指令**: `/spec:design [feature-name]`
+    -   **作用**: 此指令首先會**隱含地批准需求**（更新 `spec.json`），然後根據需求文件產生 `design.md` 檔案，並指示您審閱設計稿。
 
-#### Step 3: Generate Technical Design
+4.  **產生任務 (`/spec:tasks`**):
+    -   **指令**: `/spec:tasks [feature-name]`
+    -   **作用**: 此指令會**隱含地批准設計**，然後產生一份帶有實作清單的詳細 `tasks.md` 檔案。
 
-- **Your Command**: `gemini spec-design "User Login Feature"`
-- **Gemini's Action**: Generates the technical design in `design.md`.
-- **Your Approval**: Review the generated `design.md`. If satisfied, reply with `Approve design`.
+5.  **檢查狀態 (`/spec:status`**):
+    -   **指令**: `/spec:status [feature-name]`
+    -   **作用**: 在任何時間點執行此指令，以獲取關於功能進度的完整報告，其中包含根據 `tasks.md` 自動計算的任務完成度。
 
-#### Step 4: Generate Implementation Tasks
+### 各階段功能及與 `claude-code-spec` 的差異
 
-- **Your Command**: `gemini spec-tasks "User Login Feature"`
-- **Gemini's Action**: Creates a task list in `tasks.md`.
-- **Your Approval**: Review the generated `tasks.md`. If satisfied, reply with `Approve tasks`.
+#### **進度追蹤 (Progress Tracking)**
 
-#### Step 5: Implementation
+-   **`claude-code-spec`**: 使用事件驅動的 **Hooks**，在檔案被修改後自動在背景觸發進度更新。這是一個**主動的、推播式 (Push-based)** 的系統。
+-   **本專案 (Gemini)**: 透過 `/spec:status` 指令來實現進度追蹤。當指令被執行時，一個 Python 腳本 (`calculate_progress.py`) 會被**按需 (Pull-based)** 執行。它提供了一個高度可靠、確定性的進度計算，而不會去修改 `spec.json` 檔案，僅將即時狀態呈現在報告中。
 
-- **Your Command**: `cat .kiro/specs/User-Login-Feature/tasks.md` (to view tasks)
-- **Your Command**: `gemini "Implement the first task: ..."`
+#### **規格漂移檢測 (Specification Drift Detection)**
 
-## Spec-Driven Development Process
-
-### Process Flow Diagram
-
-This flow requires "Review & Approval" at each phase.
-
-**Steering documents** are documents that record persistent knowledge about the project (architecture, tech stack, code conventions, etc.). Creating and updating them is optional but recommended for long-term maintainability of the project.
-
-```mermaid
-graph TD
-    A["Project Start"] --> B{"Document<br/>Steering?"}
-    B -->|Yes| C["gemini steering"]
-    B -->|No| D["gemini spec-init"]
-    C --> D
-    
-    D --> E["gemini spec-requirements"]
-    E --> F["requirements.md"]
-    F --> G{"Satisfied?"}
-    G -->|No| G1["Edit & Revise"]
-    G1 --> F
-    G -->|Yes| H["To Next Phase"]
-    
-    H --> I["gemini spec-design"]
-    I --> J["design.md"]
-    J --> K{"Satisfied?"}
-    K -->|No| K1["Edit & Revise"]
-    K1 --> J
-    K -->|Yes| L["To Next Phase"]
-    
-    L --> M["gemini spec-tasks"]
-    M --> N["tasks.md"]
-    N --> O{"Satisfied?"}
-    O -->|No| O1["Edit & Revise"]
-    O1 --> N
-    O -->|Yes| P["Ready for Implementation"]
-    
-    P --> Q["Start Implementation"]
-    Q --> R["gemini spec-status"]
-    R --> S{"Complete?"}
-    S -->|No| Q
-    S -->|Yes| T["Feature Complete"]
-    
-    T --> U{"Update<br/>Steering?"}
-    U -->|Yes| V["gemini steering"]
-    U -->|No| W["Done"]
-    V --> W
-    
-    %% Style definitions
-    style A fill:#f8f9fa,stroke:#495057
-    style C fill:#495057,stroke:#343a40,color:#ffffff
-    style D fill:#495057,stroke:#343a40,color:#ffffff
-    style E fill:#495057,stroke:#343a40,color:#ffffff
-    style I fill:#495057,stroke:#343a40,color:#ffffff
-    style M fill:#495057,stroke:#343a40,color:#ffffff
-    style R fill:#495057,stroke:#343a40,color:#ffffff
-    style V fill:#495057,stroke:#343a40,color:#ffffff
-    style F fill:#f8f9fa,stroke:#6c757d
-    style J fill:#f8f9fa,stroke:#6c757d
-    style N fill:#f8f9fa,stroke:#6c757d
-    style H fill:#e8f5e9,stroke:#28a745
-    style L fill:#e8f5e9,stroke:#28a745
-    style P fill:#e8f5e9,stroke:#28a745
-    style Q fill:#adb5bd,stroke:#495057
-    style T fill:#6c757d,stroke:#495057,color:#ffffff
-    style W fill:#6c757d,stroke:#495057,color:#ffffff
-```
-
-### 3-Phase Approval Workflow
-
-The core of this system requires human review and approval at each phase:
-
-```mermaid
-sequenceDiagram
-    participant D as Developer
-    participant G as Gemini
-    participant H as Human Reviewer
-    
-    D->>G: "gemini spec-requirements feature"
-    G->>G: "Generate Requirements"
-    G->>D: "requirements.md"
-    D->>H: "Request Review"
-    H->>H: "Review & Edit"
-    
-    D->>G: "gemini spec-design feature"
-    G->>D: "Review confirmation: Please review requirements.md. If approved, reply with `Approve requirements`."
-    D->>G: "Approve requirements"
-    G->>G: "Generate Design (based on requirements)"
-    G->>D: "design.md"
-    D->>H: "Request Review"
-    H->>H: "Review & Edit"
-    
-    D->>G: "gemini spec-tasks feature"
-    G->>D: "Review confirmation: Please review design.md. If approved, reply with `Approve design`."
-    D->>G: "Approve design"
-    G->>G: "Generate Tasks (based on design)"
-    G->>D: "tasks.md"
-    D->>H: "Request Review"
-    H->>H: "Review & Edit"
-    
-    D->>G: "Start Implementation"
-```
-
-## Best Practices
-
-### ✅ Recommendations
-
-1.  **Always start with steering**
-    - Use `gemini steering` for all scenarios (intelligently handles both creation and updates)
-    - The unified command protects existing files while handling them appropriately
-
-2.  **Don't skip phases**
-    - Strictly follow the order: Requirements → Design → Tasks
-    - Ensure human review at each phase
-
-3.  **Regular progress checks**
-    - Use `gemini spec-status` to understand current situation
-    - Update task completion status appropriately
-
-4.  **Maintain steering**
-    - Run `gemini steering` after major changes (automatically determines update strategy)
-    - Update as the project grows
-
-### ❌ Things to Avoid
-
-1.  **Moving to next phase without approval**
-    - Don't forget to respond to confirmation prompts
-
-2.  **Neglecting steering documents**
-    - Outdated information hinders development
-
-3.  **Not updating task status**
-    - Progress becomes unclear and management becomes difficult
-
-## Project Structure
-
-```
-.
-├── .gemini/
-│   ├── commands/          # Gemini command definitions
-│   │   ├── spec-init.md
-│   │   ├── spec-requirements.md
-│   │   ├── spec-design.md
-│   │   ├── spec-tasks.md
-│   │   ├── spec-status.md
-│   │   ├── steering.md          # Unified steering command
-│   │   └── steering-custom.md
-│   └── settings.json
-├── .kiro/
-│   ├── steering/          # Steering documents
-│   │   ├── product.md
-│   │   ├── tech.md
-│   │   └── structure.md
-│   └── specs/             # Feature specifications
-│       └── [feature-name]/
-│           ├── spec.json      # Phase approval status
-│           ├── requirements.md # Requirements document
-│           ├── design.md      # Technical design document
-│           └── tasks.md       # Implementation tasks
-├── docs/
-│   ├── architecture.md
-│   ├── index.md
-│   └── usage.md
-├── README.md              # English version README
-├── README.zh-TW.md        # Traditional Chinese version README
-└── (your project files)
-```
-
-## Automation Features (Simulated)
-
-Gemini simulates automation through interactive approvals and file updates:
-
--   **Task Progress Tracking**: Manually update `tasks.md` checkboxes. `gemini spec-status` will parse and report progress.
--   **Specification Compliance Checking**: Gemini will check `spec.json` for phase approvals before proceeding to the next stage.
--   **Context Preservation**: Gemini will always refer to the `.kiro/steering/` and `.kiro/specs/` documents for context.
--   **Steering Drift Detection**: The `gemini steering` command will analyze the project and suggest updates to steering documents.
-
-## Troubleshooting
-
-### When commands don't work
-1.  Check existence of `.gemini/commands/` directory.
-2.  Verify command file naming convention (`command-name.md`).
-3.  Ensure you are in the correct project directory.
-
-### When stuck in approval flow
-1.  Check that you're responding correctly to review confirmation prompts (e.g., `Approve requirements`).
-2.  Verify previous phase approval is complete by checking `spec.json`.
-3.  Use `gemini spec-status <feature_name>` to diagnose current state.
-4.  Manually check/edit `spec.json` if needed.
-
-## Command Summary
-
-- `gemini steering`: Analyzes the project and generates steering documents.
-- `gemini steering-custom`: Creates custom steering documents for specialized contexts.
-- `gemini spec-init <feature_name>`: Initializes a new feature spec.
-- `gemini spec-requirements <feature_name> "<description>"`: Generates requirements.
-- `gemini spec-design <feature_name>`: Generates the technical design.
-- `gemini spec-tasks <feature_name>`: Generates implementation tasks.
-- `gemini spec-status <feature_name>`: Shows current status and progress for a feature.
+-   **`claude-code-spec`**: 依賴 Hooks，當原始碼檔案變更時，可能會在背景觸發 LLM 進行分析，提供即時回饋。
+-   **本專案 (Gemini)**: 目前沒有提供此功能。
