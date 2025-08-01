@@ -1,15 +1,10 @@
-# Product Overview
+# Product Goals
 
-This document outlines the product goals and target audience for the project.
+This project, the "Gemini CLI," serves as a template for "spec-driven development." Its primary purpose is to facilitate a "guidance-centric development mode" where "documentation is truth."
 
-## Target Audience
+The core objectives are to ensure:
+- **Consistency:** Maintain a uniform approach across development tasks.
+- **Maintainability:** Promote code and documentation that are easy to understand and update.
+- **High Quality:** Encourage robust and well-documented solutions.
 
-Who are the primary users of this product?
-
-## Key Features
-
-What are the main features of the product?
-
-## Value Proposition
-
-What value does this product provide to users?
+The project aims to provide a structured framework for interacting with the Gemini CLI, emphasizing clear processes and adherence to documented guidelines.
