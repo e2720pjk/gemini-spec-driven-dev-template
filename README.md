@@ -18,10 +18,26 @@ Our goal was to replicate that seamless, automated, and reliable development pro
 
 `gemini-spec-driven-dev-template` is a starter kit and a powerful extension for the Gemini CLI. It provides a structured, command-driven workflow for software development, guiding you from a high-level feature idea to a detailed implementation plan through a series of automated steps. This ensures consistency, quality, and clear documentation throughout the development lifecycle.
 
+### The Role of `GEMINI.md`
+
+This template includes a `GEMINI.md` file, which acts as the **central brain** for the AI agent. It contains a detailed set of instructions that define:
+-   **The AI's Persona**: How the agent should behave (e.g., as an expert system architect).
+-   **Guiding Principles**: The core rules of the development workflow, such as the command sequence and the "implicit approval" mechanism.
+-   **Workflow Steps**: A breakdown of how each `/spec:*` command should be executed.
+
+By providing this file, we ensure that the Gemini agent's behavior is predictable, consistent, and perfectly aligned with the goals of this spec-driven methodology. You can customize `GEMINI.md` to modify the agent's behavior to better suit your project's specific needs.
+
+### Configurable Workflow
+
+This template now supports both **implicit** and **interactive** approval workflows. You can switch between them by editing the `.kiro/config.json` file.
+
+-   **`"approval_mode": "implicit"`** (Default): The original, streamlined workflow where running the next command (e.g., `/spec:design`) automatically approves the previous stage.
+-   **`"approval_mode": "interactive"`**: A more deliberate workflow where the agent will ask for your explicit `[y/N]` confirmation before proceeding to the next stage, similar to the original `claude-code-spec`.
+
 ### How to Get Started
 
-1.  **Copy the Extension**: Copy the `.gemini` directory  into your own project's directory.
-2.  **Copy Steering Files**: Copy the `.kiro/steering` directory into your project's `.kiro/` directory to establish the foundational development principles.
+1.  **Copy Core Files**: Copy the `.gemini`, `.kiro`, and `GEMINI.md` files into your project's root directory.
+2.  **(Optional) Configure Workflow**: Edit `.kiro/config.json` to set your preferred `approval_mode`.
 3.  **Initialize a Feature**: Start your first feature specification by running:
     ```bash
     /spec:init "A detailed description of the feature you want to build."
@@ -78,10 +94,27 @@ Follow this sequence to develop a feature from scratch:
 
 `gemini-spec-driven-dev-template` 是一個為 Gemini CLI 設計的啟動套件與強大的擴充功能。它提供了一套結構化的、由指令驅動的軟體開發工作流程，透過一系列自動化步驟，引導您從一個高層次的功能構想，產出一份詳細的實作計畫。這確保了在整個開發生命週期中的一致性、高品質與清晰的文件紀錄。
 
+### `GEMINI.md` 的角色
+
+本範本包含一個 `GEMINI.md` 檔案，它扮演著 AI 代理人的 **核心大腦**。該檔案內含一組詳細的指令，定義了：
+
+-   **AI 的角色 (Persona)**：代理人應如何表現 (例如，作為一名專業的系統架構師)。
+-   **指導原則 (Guiding Principles)**：開發工作流程的核心規則，例如指令順序和「隱式批准」機制。
+-   **工作流程步驟 (Workflow Steps)**：每個 `/spec:*` 指令應如何執行的詳細分解。
+
+透過提供這個檔案，我們確保了 Gemini 代理人的行為是可預測的、一致的，並與此規格驅動方法的目標完全一致。您可以客製化 `GEMINI.md` 來修改代理人的行為，使其更符合您專案的特定需求。
+
+### 可配置的工作流程
+
+本範本現在同時支援 **隱式 (implicit)** 和 **互動式 (interactive)** 兩種審批工作流程。您可以透過編輯 `.kiro/config.json` 檔案來切換模式。
+
+-   **`"approval_mode": "implicit"`** (預設): 原有的流線型工作流程，執行下一階段的指令（例如 `/spec:design`）即會自動批准前一階段。
+-   **`"approval_mode": "interactive"`**: 一個更嚴謹的工作流程，代理人在進入下一階段之前，會明確詢問您的 `[y/N]` 確認，類似於原始的 `claude-code-spec`。
+
 ### 如何開始
 
-1.  **複製擴充功能**：將 `.gemini/` 資料夾，複製到您自己專案的目錄中。
-2.  **複製指導原則檔案**：將 `.kiro/steering` 目錄複製到您專案的 `.kiro/` 目錄下，以建立基礎的開發原則。
+1.  **複製核心檔案**：將 `.gemini`、`.kiro` 和 `GEMINI.md` 檔案複製到您專案的根目錄。
+2.  **（可選）配置工作流程**：編輯 `.kiro/config.json` 來設定您偏好的 `approval_mode`。
 3.  **初始化一個功能**：執行以下指令來開始您的第一個功能規格：
     ```bash
     /spec:init "在這裡詳細描述您想建立的功能。"

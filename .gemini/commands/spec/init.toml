@@ -1,34 +1,43 @@
-description = "Initializes a new feature specification."
+description = "Initializes a new feature specification, checking for existing files first."
 prompt = """
-Initialize a new feature specification named '{{feature_name}}'.
+The user wants to initialize a feature specification named '{{feature_name}}'.
 
-1.  Create a directory for the feature in `.kiro/specs/{{feature_name}}`.
-2.  Create a `spec.json` file in the new directory with the following content:
-    ```json
-    {
-      "feature_name": "{{feature_name}}",
-      "project_description": "",
-      "created_at": "{{current_timestamp}}",
-      "updated_at": "{{current_timestamp}}",
-      "language": "traditional chinese",
-      "phase": "initialized",
-      "approvals": {
-        "requirements": {
-          "generated": false,
-          "approved": false
-        },
-        "design": {
-          "generated": false,
-          "approved": false
-        },
-        "tasks": {
-          "generated": false,
-          "approved": false
-        }
-      },
-      "ready_for_implementation": false
-    }
-    ```
-3.  Create empty files: `requirements.md`, `design.md`, `tasks.md` in the new directory.
-4.  Respond with a confirmation message that the feature specification has been initialized.
+**1. Determine the Language (Do this first):**
+a. Check if the user specified a language (e.g., `/spec:init {{feature_name}} japanese`).
+b. If not, ask the user: "Please choose a language for the specification documents (e.g., English, Traditional Chinese, Japanese). If you don't specify one, 'English' will be used as the default."
+c. Use the user's choice or default to 'English'. Store this language choice for later.
+d. **Set the response language for this interaction**: Based on the determined language, set the response language for this interaction. For example, if the language is 'Traditional Chinese', all responses should be in Traditional Chinese. If 'English', all responses should be in English.
+
+**2. Check for Existing Specification:**
+a. Use the `list_directory` tool to check if the directory `.kiro/specs/{{feature_name}}` already exists.
+
+**3. Handle Specification Based on Existence:**
+
+**A. If the directory ALREADY EXISTS:**
+   a. Inform the user that a specification for '{{feature_name}}' already exists.
+   b. List the files currently in the directory.
+   c. Check for the presence of the following required files: `spec.json`, `requirements.md`, `design.md`, `tasks.md`.
+   d. For **each file that is MISSING**, create it as an empty file. Do NOT modify or overwrite any files that already exist.
+   e. If `spec.json` was missing, create it using the language determined in Step 1. If it already existed, do not change it.
+   f. Report to the user which, if any, missing files were created.
+
+**B. If the directory DOES NOT EXIST:**
+   a. Create the directory `.kiro/specs/{{feature_name}}`.
+   b. Create a `spec.json` file in the new directory using the language determined in Step 1. The content should be:
+      ```json
+      {
+        "feature_name": "{{feature_name}}",
+        "project_description": "",
+        "created_at": "{{current_timestamp}}",
+        "updated_at": "{{current_timestamp}}",
+        "language": "[INSERT LANGUAGE FROM STEP 1 HERE]",
+        "phase": "initialized",
+        "requirements": { "generated": false, "approved": false },
+        "design": { "generated": false, "approved": false },
+        "tasks": { "generated": false, "approved": false },
+        "ready_for_implementation": false
+      }
+      ```
+   c. Create the following empty files in the new directory: `requirements.md`, `design.md`, `tasks.md`.
+   d. Respond with a confirmation message that the new feature specification has been initialized, mentioning the language that was selected.
 """

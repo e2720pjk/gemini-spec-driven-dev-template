@@ -1,28 +1,43 @@
-description = "Approves the design and generates implementation tasks for a feature."
+description = "Generates high-quality implementation tasks, with a configurable approval workflow."
 prompt = """
-The user wants to generate tasks for '{{feature_name}}', which implies they have approved the design.
+The user wants to generate tasks for '{{feature_name}}'.
 
-Perform the following steps in order:
 
-1.  **Approve Design**:
-    a.  Read the content of `.kiro/specs/{{feature_name}}/spec.json` using the `read_file` tool.
-    b.  In the JSON content, change `"approved": false` to `"approved": true` within the `approvals.design` object.
-    c.  Update the top-level `"phase"` property to `"design-approved"`.
-    d.  Use the `replace` tool to write the updated JSON back to `spec.json`.
+**Step 1: Read Workflow Configuration**
+- Read the file `.kiro/config.json` to determine the `approval_mode`.
+- If the file doesn't exist, default to `implicit` mode.
 
-2.  **Generate Implementation Tasks**:
-    a.  Read the approved technical design from `.kiro/specs/{{feature_name}}/design.md`.
-    b.  Break down the design into a detailed list of actionable implementation tasks with Markdown checkboxes.
+**Step 2: Conditional Approval**
+- **IF `approval_mode` is `interactive`**:
+  1. Ask the user for confirmation: "Have you reviewed and approved the `design.md` for `{{feature_name}}`? [y/N]"
+  2. If the user responds with "y" or "yes", proceed. Otherwise, stop and instruct the user to review the design.
+- **ELSE (`approval_mode` is `implicit` or not set)**:
+  1. Proceed directly to the next step without asking for confirmation.
+
+**Step 3: Approve Design & Generate Tasks (Proceeds after approval or implicitly)**
+
+1.  **Approve Design in `spec.json`**:
+    a.  Read `.kiro/specs/{{feature_name}}/spec.json`.
+    b.  Update `design.approved` to `true` and `phase` to `"design-approved"`.
+    c.  Write the changes back.
+
+2.  **Generate High-Quality Implementation Tasks**:
+    a.  Read the approved `.kiro/specs/{{feature_name}}/design.md`.
+    b.  Break down the design into a detailed list of actionable implementation tasks. The tasks **must**:
+        -   Be granular and suitable for an LLM to generate code for.
+        -   Follow a Test-Driven Development (TDD) approach: each implementation task should have a corresponding test task (e.g., "- [ ] Test for user login endpoint").
+        -   Be organized logically (e.g., by component, feature, or layer).
+        -   Use Markdown checkboxes (`- [ ]`).
 
 3.  **Write Tasks Document**:
-    a.  Use the `write_file` tool to save the tasks to `.kiro/specs/{{feature_name}}/tasks.md`.
+    a.  Save the generated task list to `.kiro/specs/{{feature_name}}/tasks.md`.
 
 4.  **Update Spec Status for Tasks**:
     a.  Read `.kiro/specs/{{feature_name}}/spec.json` again.
-    b.  Update `approvals.tasks.generated` to `true` and set `"phase"` to `"tasks-generated"`.
-    c.  Use the `replace` tool to write these changes back.
+    b.  Update `tasks.generated` to `true` and `phase` to `"tasks-generated"`.
+    c.  Write the changes back.
 
 5.  **Instruct User for Next Step**:
-    a.  Inform the user that `tasks.md` has been generated and reviewed.
+    a.  Inform the user that `tasks.md` has been generated.
     b.  State that the feature is now ready for implementation.
 """
