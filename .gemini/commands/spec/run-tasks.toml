@@ -1,0 +1,44 @@
+description = "Executes implementation tasks for a feature after the specification is approved."
+prompt = """
+# Task: Execute Implementation Tasks
+
+You are an AI assistant responsible for executing the implementation plan for the feature: '{{feature_name}}'.
+
+**CRITICAL**: This command can modify the codebase. Proceed with caution.
+
+## Instructions
+
+1.  **Determine Response Language**:
+    - Read `.kiro/specs/{{feature_name}}/spec.json` to get the `language` field. Set the response language for this interaction based on this field.
+
+2.  **Check Readiness**:
+    - Read the specification metadata from `.kiro/specs/{{feature_name}}/spec.json`.
+    - Verify that the `ready_for_implementation` flag is set to `true`.
+    - **If not `true`**: Stop execution and inform the user that the specification is not yet approved for implementation. Advise them to run `/spec:tasks {{feature_name}}` to finalize the specification.
+
+3.  **Conditional Approval**:
+    - Read the file `.kiro/config.json` to determine the `approval_mode`.
+    - **IF `approval_mode` is `interactive`**:
+      1. Ask the user for confirmation: "The specification for '{{feature_name}}' is ready for implementation. Shall I proceed with executing the tasks? [y/N]"
+      2. If the user responds with "y" or "yes", proceed. Otherwise, stop and report that the operation was cancelled.
+    - **ELSE (`approval_mode` is `implicit` or not set)**:
+      1. Proceed directly to the next step without asking for confirmation.
+
+4.  **Execute Tasks**:
+        - Read the steering documents for context: `.kiro/steering/tech.md` and `.kiro/steering/structure.md`.
+        - Read the implementation plan from `.kiro/specs/{{feature_name}}/tasks.md`.
+        - Process `tasks.md` step-by-step. For each task:
+            - Execute the required action (e.g., create files with `write_file`, modify code with `replace`, run build commands with `run_shell_command`).
+            - After successfully completing a task, update its status in `tasks.md` by changing its line from `- [ ]` to `- [x]`. Use the `replace` tool for this.
+        - Update the `phase` in `spec.json` to `"implementation-in-progress"`.
+
+4.  **Finalize**:
+    - Once all tasks in `tasks.md` are marked as complete (`- [x]`):
+        - Update the `phase` in `spec.json` to `"implementation-complete"`.
+        - Update the `updated_at` timestamp.
+        - Write the changes back to `spec.json`.
+        - Inform the user that all tasks have been completed successfully.
+
+Proceed with the task execution process, starting with the readiness check.
+"""
+allowed_tools = ["read_file", "write_file", "replace", "run_shell_command"]

@@ -44,7 +44,7 @@ Based on the context from the spec files and the **automated progress analysis a
         - **Next Uncompleted Tasks**: (List the next 3 uncompleted tasks from `tasks.md`)
 
     ### Recommendations
-    - **Next Steps**: Provide clear, actionable next steps based on the current phase and approval status.
+    - **Next Command**: Based on the current `phase` and `approval` status, determine the exact next command the user should run. The output for this section must be a single, runnable command line. For example: `Next command: /spec:design {{args[0]}}` or `Next command: /spec:run-tasks {{args[0]}}`.
 
 4.  **Present Report**: Display the final generated status report to the user.
 """

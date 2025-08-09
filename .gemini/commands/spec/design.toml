@@ -20,14 +20,15 @@ The user wants to generate the design for '{{feature_name}}'.
     b.  Update `requirements.approved` to `true` and `phase` to `"requirements-approved"`.
     c.  Write the changes back.
 
-2.  **Propose Technical Approaches for Discussion**:
+2.  **Research and Propose Technical Approaches**:
     a.  Read the approved `.kiro/specs/{{feature_name}}/requirements.md`.
     b.  Read all steering documents: `@.kiro/steering/product.md`, `@.kiro/steering/tech.md`, and `@.kiro/steering/structure.md`.
     c.  **IMPORTANT**: Read the existing `.kiro/specs/{{feature_name}}/design.md` if it exists, to use as a baseline and avoid overwriting without discussion.
     d.  Identify key technical decisions required for this feature based on the requirements and steering documents.
-    e.  For each key decision, propose 2-3 viable technical approaches/solutions. Explain the pros and cons of each.
-    f.  Present these options to the user for discussion and selection. **DO NOT PROCEED TO GENERATE THE FULL DESIGN UNTIL THE USER HAS PROVIDED FEEDBACK OR MADE A CHOICE.**
-    g.  Instruct the user to provide their preferred approach or further input.
+    e.  **Use the `google_web_search` tool to research current best practices, libraries, and architectural patterns for these key decisions.**
+    f.  For each key decision, propose 2-3 viable technical approaches/solutions. Explain the pros and cons of each.
+    g.  Present these options to the user for discussion and selection. **DO NOT PROCEED TO GENERATE THE FULL DESIGN UNTIL THE USER HAS PROVIDED FEEDBACK OR MADE A CHOICE.**
+    h.  Instruct the user to provide their preferred approach or further input.
 
 **Step 4: Generate High-Quality Technical Design (After User Discussion)**
 
@@ -57,3 +58,4 @@ The user wants to generate the design for '{{feature_name}}'.
 **Step 5: Determine Response Language**
 - Read `.kiro/specs/{{feature_name}}/spec.json` to get the `language` field. Set the response language for this interaction based on this field.
 """
+allowed_tools = ["read_file", "write_file", "google_web_search", "list_directory"]
