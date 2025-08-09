@@ -16,7 +16,7 @@ Our goal was to replicate that seamless, automated, and reliable development pro
 
 ### Project Overview
 
-`gemini-spec-driven-dev-template` is a starter kit and a powerful extension for the Gemini CLI. It provides a structured, command-driven workflow for software development, guiding you from a high-level feature idea to a detailed implementation plan through a series of automated steps. This ensures consistency, quality, and clear documentation throughout the development lifecycle.
+`gemini-spec-driven-dev-template` is a starter kit and a powerful extension for the Gemini CLI. It provides a structured, command-driven workflow for software development, guiding you from a high-level feature idea to a detailed, and now executable, implementation plan (via the new `/spec:run-tasks` command) through a series of automated steps. This ensures consistency, quality, and clear documentation throughout the development lifecycle.
 
 ### The Role of `GEMINI.md` and Multilingual Interaction
 
@@ -56,15 +56,35 @@ Follow this sequence to develop a feature from scratch:
 
 3.  **Generate Design (`/spec:design`**):
     -   **Command**: `/spec:design [feature-name]`
-    -   **Action**: This command first **implicitly approves the requirements** (updating `spec.json`) and then generates the `design.md` file based on the requirements. It then instructs you to review the design.
+    -   **Action**: This command first **implicitly approves the requirements** and then generates the `design.md` file. It now leverages web search to research best practices before proposing technical solutions.
 
 4.  **Generate Tasks (`/spec:tasks`**):
     -   **Command**: `/spec:tasks [feature-name]`
-    -   **Action**: This command **implicitly approves the design** and then generates a detailed `tasks.md` file with a checklist for implementation.
+    -   **Action**: This command **implicitly approves the design** and then generates a detailed `tasks.md` file with a TDD-style checklist for implementation.
 
-5.  **Check Status (`/spec:status`**):
+5.  **Execute Implementation (`/spec:run-tasks`**):
+    -   **Command**: `/spec:run-tasks [feature-name]`
+    -   **Action**: Automatically executes the coding tasks defined in `tasks.md`, writing and modifying files to build the feature.
+
+6.  **Check Status (`/spec:status`**):
     -   **Command**: `/spec:status [feature-name]`
-    -   **Action**: At any point, run this command to get a full report on the feature's progress, including an automated calculation of task completion from `tasks.md`.
+    -   **Action**: At any point, run this command to get a full report on the feature's progress. The report now includes a specific, runnable next command to guide you.
+
+### Using the Sample Project
+
+This template includes a fully functional sample project, the `blog-post-generator`, located in the `samples/blog-post-generator/` directory. This project is a *completed example* of a feature developed using this spec-driven workflow. You can explore it to understand the process and how the generated specifications (requirements, design, tasks) translate into a working application.
+
+1.  **Navigate to the Sample**:
+    ```bash
+    cd samples/blog-post-generator/
+    ```
+2.  **Explore the Project**: Review the Python files in `src/` and the tests in `tests/` to understand its structure.
+3.  **Run Tests (Optional)**:
+    ```bash
+    pytest
+    ```
+4.  **Trace the Spec-Driven Workflow**:
+    While this project is already complete, you can trace how it would have been developed using the spec commands. For example, you can examine the generated `requirements.md`, `design.md`, and `tasks.md` files in `.kiro/specs/blog-post-generator/` to see the output of each phase.
 
 ### Phase-by-Phase Functionality and Differences from `claude-code-spec`
 
@@ -91,7 +111,7 @@ Follow this sequence to develop a feature from scratch:
 
 ### 專案簡介
 
-`gemini-spec-driven-dev-template` 是一個為 Gemini CLI 設計的啟動套件與強大的擴充功能。它提供了一套結構化的、由指令驅動的軟體開發工作流程，透過一系列自動化步驟，引導您從一個高層次的功能構想，產出一份詳細的實作計畫。這確保了在整個開發生命週期中的一致性、高品質與清晰的文件紀錄。
+`gemini-spec-driven-dev-template` 是一個為 Gemini CLI 設計的啟動套件與強大的擴充功能。它提供了一套結構化的、由指令驅動的軟體開發工作流程，透過一系列自動化步驟，引導您從一個高層次的功能構想，產出一份詳細且**可執行**的實作計畫（透過新的 `/spec:run-tasks` 指令）。這確保了在整個開發生命週期中的一致性、高品質與清晰的文件紀錄。
 
 ### `GEMINI.md` 的角色與多語言互動
 
@@ -131,15 +151,35 @@ Follow this sequence to develop a feature from scratch:
 
 3.  **產生設計 (`/spec:design`**):
     -   **指令**: `/spec:design [feature-name]`
-    -   **作用**: 此指令首先會**隱含地批准需求**（更新 `spec.json`），然後根據需求文件產生 `design.md` 檔案，並指示您審閱設計稿。
+    -   **作用**: 此指令首先會**隱含地批准需求**，然後產生 `design.md` 檔案。它現在會利用網頁搜尋來研究最佳實踐，然後再提出技術方案。
 
 4.  **產生任務 (`/spec:tasks`**):
     -   **指令**: `/spec:tasks [feature-name]`
-    -   **作用**: 此指令會**隱含地批准設計**，然後產生一份帶有實作清單的詳細 `tasks.md` 檔案。
+    -   **作用**: 此指令會**隱含地批准設計**，然後產生一份採用 TDD 風格的、帶有實作清單的詳細 `tasks.md` 檔案。
 
-5.  **檢查狀態 (`/spec:status`**):
+5.  **執行實作 (`/spec:run-tasks`**):
+    -   **指令**: `/spec:run-tasks [feature-name]`
+    -   **作用**: 自動執行 `tasks.md` 中定義的編碼任務，透過寫入與修改檔案來建構功能。
+
+6.  **檢查狀態 (`/spec:status`**):
     -   **指令**: `/spec:status [feature-name]`
-    -   **作用**: 在任何時間點執行此指令，以獲取關於功能進度的完整報告，其中包含根據 `tasks.md` 自動計算的任務完成度。
+    -   **作用**: 在任何時間點執行此指令，以獲取關於功能進度的完整報告。報告中現在會包含一個明確、可執行的下一步指令來引導您。
+
+### 使用範例專案
+
+本範本包含一個功能齊全的範例專案，即位於 `samples/blog-post-generator/` 目錄下的 `blog-post-generator`。這個專案是使用此規格驅動工作流程開發的**已完成範例**。您可以探索它以了解該過程以及生成的規格（需求、設計、任務）如何轉化為一個可運行的應用程式。
+
+1.  **導航到範例**：
+    ```bash
+    cd samples/blog-post-generator/
+    ```
+2.  **探索專案**：查看 `src/` 中的 Python 檔案和 `tests/` 中的測試，以了解其結構。
+3.  **運行測試（可選）**：
+    ```bash
+    pytest
+    ```
+4.  **追溯規格驅動工作流程**：
+    雖然這個專案已經完成，但您可以追溯它是如何使用規格命令開發的。例如，您可以檢查 `.kiro/specs/blog-post-generator/` 中生成的 `requirements.md`、`design.md` 和 `tasks.md` 檔案，以查看每個階段的輸出。
 
 ### 各階段功能及與 `claude-code-spec` 的差異
 

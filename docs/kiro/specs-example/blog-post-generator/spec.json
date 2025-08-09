@@ -1,0 +1,12 @@
+{
+  "feature_name": "blog-post-generator",
+  "project_description": "Create a command-line tool that generates a basic blog post in Markdown format. It should prompt the user for a title, author, and content, then save it to a file named after the title (kebab-cased) in a 'posts' directory. It should also include a simple header with metadata. Use English for all documents.",
+  "created_at": "2025-08-09T16:12:43Z",
+  "updated_at": "2025-08-09T16:38:08Z",
+  "language": "English",
+  "phase": "implementation-complete",
+  "requirements": { "generated": true, "approved": true },
+  "design": { "generated": true, "approved": true },
+  "tasks": { "generated": true, "approved": false },
+  "ready_for_implementation": true
+}

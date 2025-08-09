@@ -8,7 +8,7 @@ The user wants to generate the design for '{{feature_name}}'.
 
 **Step 2: Conditional Approval for Requirements**
 - **IF `approval_mode` is `interactive`**:
-  1. Ask the user for confirmation: "Have you reviewed and approved the `requirements.md` for `{{feature_name}}`? [y/N]"
+  1. Ask the user for confirmation: "Have you reviewed and approved the `requirements.md` for `{{feature_name}}'? [y/N]"
   2. If the user responds with "y" or "yes", proceed. Otherwise, stop and instruct the user to review the requirements.
 - **ELSE (`approval_mode` is `implicit` or not set)**:
   1. Proceed directly to the next step without asking for confirmation.
@@ -25,10 +25,15 @@ The user wants to generate the design for '{{feature_name}}'.
     b.  Read all steering documents: `@.kiro/steering/product.md`, `@.kiro/steering/tech.md`, and `@.kiro/steering/structure.md`.
     c.  **IMPORTANT**: Read the existing `.kiro/specs/{{feature_name}}/design.md` if it exists, to use as a baseline and avoid overwriting without discussion.
     d.  Identify key technical decisions required for this feature based on the requirements and steering documents.
-    e.  **Use the `google_web_search` tool to research current best practices, libraries, and architectural patterns for these key decisions.**
-    f.  For each key decision, propose 2-3 viable technical approaches/solutions. Explain the pros and cons of each.
-    g.  Present these options to the user for discussion and selection. **DO NOT PROCEED TO GENERATE THE FULL DESIGN UNTIL THE USER HAS PROVIDED FEEDBACK OR MADE A CHOICE.**
-    h.  Instruct the user to provide their preferred approach or further input.
+    e.  **MANDATORY RESEARCH**: Before proposing solutions, you MUST perform a web search.
+        i.  Formulate a concise search query based on the key technical decisions identified in step d.
+        ii. **Output the formulated search query as a single line of plain text.** This output will be captured and used as `{{search_query}}` in the next step.
+        iii. **CALL THE `google_web_search` TOOL with the `{{search_query}}` from the previous step.**
+        iv. Analyze the search results and summarize key findings relevant to the design.
+    f.  **Re-assert Response Language**: Read `.kiro/specs/{{feature_name}}/spec.json` to get the `language` field. Set the response language for this interaction based on this field.
+    g.  For each key decision, propose 2-3 viable technical approaches/solutions. Explain the pros and cons of each, incorporating insights from your web search.
+    h.  Present these options to the user for discussion and selection. **DO NOT PROCEED TO GENERATE THE FULL DESIGN UNTIL THE USER HAS PROVIDED FEEDBACK OR MADE A CHOICE.**
+    i.  Instruct the user to provide their preferred approach or further input.
 
 **Step 4: Generate High-Quality Technical Design (After User Discussion)**
 
