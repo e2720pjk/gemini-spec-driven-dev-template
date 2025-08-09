@@ -18,14 +18,13 @@ Our goal was to replicate that seamless, automated, and reliable development pro
 
 `gemini-spec-driven-dev-template` is a starter kit and a powerful extension for the Gemini CLI. It provides a structured, command-driven workflow for software development, guiding you from a high-level feature idea to a detailed implementation plan through a series of automated steps. This ensures consistency, quality, and clear documentation throughout the development lifecycle.
 
-### The Role of `GEMINI.md`
+### The Role of `GEMINI.md` and Multilingual Interaction
 
-This template includes a `GEMINI.md` file, which acts as the **central brain** for the AI agent. It contains a detailed set of instructions that define:
--   **The AI's Persona**: How the agent should behave (e.g., as an expert system architect).
--   **Guiding Principles**: The core rules of the development workflow, such as the command sequence and the "implicit approval" mechanism.
--   **Workflow Steps**: A breakdown of how each `/spec:*` command should be executed.
+This template includes a `GEMINI.md` file, which acts as the **central brain** for the AI agent. It contains a detailed set of instructions that define the agent's behavior, workflow, and logic.
 
-By providing this file, we ensure that the Gemini agent's behavior is predictable, consistent, and perfectly aligned with the goals of this spec-driven methodology. You can customize `GEMINI.md` to modify the agent's behavior to better suit your project's specific needs.
+A key feature of this logic is **multilingual support**. When you initialize a feature with `/spec:init`, you can specify a language (e.g., Traditional Chinese, Japanese, English). This choice is saved and dictates the language for **all subsequent interactions** for that feature. The agent will read this setting and conduct the entire conversation—from questions to confirmations to generating documents—in your chosen language.
+
+While the base `GEMINI.md` file is written in English, it instructs the agent to be multilingual. A `GEMINI_zh-TW.md` is also provided as a direct Chinese translation for user reference. You can customize these files to alter the agent's core logic.
 
 ### Configurable Workflow
 
@@ -94,15 +93,13 @@ Follow this sequence to develop a feature from scratch:
 
 `gemini-spec-driven-dev-template` 是一個為 Gemini CLI 設計的啟動套件與強大的擴充功能。它提供了一套結構化的、由指令驅動的軟體開發工作流程，透過一系列自動化步驟，引導您從一個高層次的功能構想，產出一份詳細的實作計畫。這確保了在整個開發生命週期中的一致性、高品質與清晰的文件紀錄。
 
-### `GEMINI.md` 的角色
+### `GEMINI.md` 的角色與多語言互動
 
-本範本包含一個 `GEMINI.md` 檔案，它扮演著 AI 代理人的 **核心大腦**。該檔案內含一組詳細的指令，定義了：
+本範本包含一個 `GEMINI.md` 檔案，它扮演著 AI 代理人的 **核心大腦**。該檔案內含一組詳細的指令，定義了代理人的行為、工作流程與核心邏輯。
 
--   **AI 的角色 (Persona)**：代理人應如何表現 (例如，作為一名專業的系統架構師)。
--   **指導原則 (Guiding Principles)**：開發工作流程的核心規則，例如指令順序和「隱式批准」機制。
--   **工作流程步驟 (Workflow Steps)**：每個 `/spec:*` 指令應如何執行的詳細分解。
+這套邏輯中的一個關鍵特性是**多語言支援**。當您透過 `/spec:init` 初始化一個新功能時，可以指定一種語言（例如：繁體中文、日文、英文）。這個選擇會被儲存下來，並決定該功能後續**所有互動所使用的語言**。代理人會讀取此設定，並以您選擇的語言來進行整個對話，包含提問、確認以及產出最終文件。
 
-透過提供這個檔案，我們確保了 Gemini 代理人的行為是可預測的、一致的，並與此規格驅動方法的目標完全一致。您可以客製化 `GEMINI.md` 來修改代理人的行為，使其更符合您專案的特定需求。
+雖然 `GEMINI.md` 的基礎檔案是以英文撰寫的，但它內部的指令會要求代理人進行多語言溝通。我們也額外提供了 `GEMINI_zh-TW.md` 作為中文翻譯供使用者參考。您可以客製化這些檔案來調整代理人的核心邏輯。
 
 ### 可配置的工作流程
 
