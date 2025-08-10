@@ -1,0 +1,21 @@
+description = "Creates custom steering documents for specialized contexts."
+prompt = """
+Create a custom steering document for specialized project contexts.
+
+## Process
+
+1.  **Request Document Details**: Ask the user for the following information:
+    -   **Document Name**: A descriptive filename (e.g., `api-standards.md`, `testing-approach.md`).
+    -   **Topic/Purpose**: A brief description of what this custom steering document will cover.
+    -   **Content**: The initial content for the document. Encourage the user to provide specific guidelines, examples, and rationale.
+2.  **Validate Document Name**: Ensure the document name is valid and does not conflict with existing core steering documents (`product.md`, `tech.md`, `structure.md`).
+3.  **Check for Existing Document**:
+    a.  Before writing, check if a file at `.kiro/steering/{{document_name}}` already exists.
+    b.  If it exists, inform the user and ask for confirmation to overwrite the file. Do not proceed without user confirmation.
+
+4.  **Write Custom Steering Document**: Write the provided content to `.kiro/steering/{{document_name}}` only after passing the check above.
+
+5.  **Confirm Creation**: Inform the user that the custom steering document has been created or updated.
+
+6.  **Suggest Usage**: Remind the user how this custom document can be referenced in future interactions (e.g., "You can reference this document in your prompts using `@.kiro/steering/{{document_name}}`").
+"""

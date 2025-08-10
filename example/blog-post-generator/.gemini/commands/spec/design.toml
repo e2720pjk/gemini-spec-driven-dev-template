@@ -1,0 +1,66 @@
+description = "Generates a high-quality technical design, with a configurable approval workflow and interactive technology discussion."
+prompt = """
+The user wants to generate the design for '{{feature_name}}'.
+
+**Step 1: Read Workflow Configuration**
+- Read the file `.kiro/config.json` to determine the `approval_mode`.
+- If the file doesn't exist, default to `implicit` mode.
+
+**Step 2: Conditional Approval for Requirements**
+- **IF `approval_mode` is `interactive`**:
+  1. Ask the user for confirmation: "Have you reviewed and approved the `requirements.md` for `{{feature_name}}'? [y/N]"
+  2. If the user responds with "y" or "yes", proceed. Otherwise, stop and instruct the user to review the requirements.
+- **ELSE (`approval_mode` is `implicit` or not set)**:
+  1. Proceed directly to the next step without asking for confirmation.
+
+**Step 3: Approve Requirements & Initiate Design Discussion (Proceeds after approval or implicitly)**
+
+1.  **Approve Requirements in `spec.json`**:
+    a.  Read `.kiro/specs/{{feature_name}}/spec.json`.
+    b.  Update `requirements.approved` to `true` and `phase` to `"requirements-approved"`.
+    c.  Write the changes back.
+
+2.  **Research and Propose Technical Approaches**:
+    a.  Read the approved `.kiro/specs/{{feature_name}}/requirements.md`.
+    b.  Read all steering documents: `@.kiro/steering/product.md`, `@.kiro/steering/tech.md`, and `@.kiro/steering/structure.md`.
+    c.  **IMPORTANT**: Read the existing `.kiro/specs/{{feature_name}}/design.md` if it exists, to use as a baseline and avoid overwriting without discussion.
+    d.  Identify key technical decisions required for this feature based on the requirements and steering documents.
+    e.  **MANDATORY RESEARCH**: Before proposing solutions, you MUST perform a web search.
+        i.  Formulate a concise search query based on the key technical decisions identified in step d.
+        ii. **Output the formulated search query as a single line of plain text.** This output will be captured and used as `{{search_query}}` in the next step.
+        iii. **CALL THE `google_web_search` TOOL with the `{{search_query}}` from the previous step.**
+        iv. Analyze the search results and summarize key findings relevant to the design.
+    f.  **Re-assert Response Language**: Read `.kiro/specs/{{feature_name}}/spec.json` to get the `language` field. Set the response language for this interaction based on this field.
+    g.  For each key decision, propose 2-3 viable technical approaches/solutions. Explain the pros and cons of each, incorporating insights from your web search.
+    h.  Present these options to the user for discussion and selection. **DO NOT PROCEED TO GENERATE THE FULL DESIGN UNTIL THE USER HAS PROVIDED FEEDBACK OR MADE A CHOICE.**
+    i.  Instruct the user to provide their preferred approach or further input.
+
+**Step 4: Generate High-Quality Technical Design (After User Discussion)**
+
+1.  **Incorporate User Feedback**: Based on the user's selection/feedback from the previous step, finalize the technical approaches.
+
+2.  **Generate Comprehensive Technical Design**:
+    a.  Generate a comprehensive technical design document. The design document **must** include:
+        -   **Architecture Overview**: A high-level description of the proposed architecture, incorporating chosen technical approaches.
+        -   **Data Flow Diagram**: A simple diagram (using Mermaid.js if possible) showing how data moves through the system.
+        -   **Component Breakdown**: A list of new or modified components.
+        -   **Data Schema / ERD**: Define necessary data models or database schema changes.
+        -   **Security Considerations**: Address potential security vulnerabilities.
+        -   **Testing Strategy**: Outline the plan for unit, integration, and end-to-end tests.
+
+3.  **Write Design Document**:
+    a.  Save the generated design to `.kiro/specs/{{feature_name}}/design.md`.
+
+4.  **Update Spec Status for Design**:
+    a.  Read `.kiro/specs/{{feature_name}}/spec.json` again.
+    b.  Update `design.generated` to `true` and `phase` to `"design-generated"`.
+    c.  Write the changes back.
+
+5.  **Instruct User for Next Step**:
+    a.  Inform the user that `design.md` has been generated.
+    b.  Instruct them to review it and then run `/spec:tasks {{feature_name}}` to proceed.
+
+**Step 5: Determine Response Language**
+- Read `.kiro/specs/{{feature_name}}/spec.json` to get the `language` field. Set the response language for this interaction based on this field.
+"""
+allowed_tools = ["read_file", "write_file", "google_web_search", "list_directory"]

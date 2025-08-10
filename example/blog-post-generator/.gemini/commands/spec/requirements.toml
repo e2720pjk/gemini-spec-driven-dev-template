@@ -1,0 +1,45 @@
+description = "Generates comprehensive, high-quality requirements for a feature."
+prompt = """
+Generate comprehensive requirements for feature: '{{feature_name}}'.
+
+## Process
+
+1.  **Determine Response Language**: Read `.kiro/specs/{{feature_name}}/spec.json` to get the `language` field. Set the response language for this interaction based on this field.
+2.  **Understand User Request**: Read the user's request for requirements for '{{feature_name}}'.
+3.  **Generate Requirements Document**: Create a comprehensive `requirements.md` document in the language specified in `spec.json` (check `.kiro/specs/{{feature_name}}/spec.json` for the "language" field).
+
+    ### Requirements Generation Guidelines
+    -   **Focus on Core Functionality**: Start with the essential features from the user's idea.
+    -   **Use EARS Format**: All acceptance criteria **must** use proper EARS syntax (e.g., "WHEN [event/condition] THEN [system] SHALL [response]"). Ensure the format is consistent.
+    -   **Hierarchy and Granularity**: Structure requirements with a clear hierarchy (e.g., Introduction -> Major Feature Area -> User Story -> Acceptance Criteria). The structure must be well-organized.
+    -   **Testable Conditions**: Each acceptance criterion must be a specific, testable condition.
+
+    ### Requirements Document Structure
+    ```markdown
+    # Requirements: {{feature_name}}
+
+    ## 1. Introduction
+    [A clear introduction summarizing the feature and its business value.]
+
+    ## 2. Functional Requirements
+
+    ### 2.1 [Major Feature Area 1]
+    **User Story:** As a [role], I want [feature], so that [benefit].
+
+    #### Acceptance Criteria
+    -   **EARS-1.1.1**: WHEN [triggering event] THEN the [system name] SHALL [perform a specific action].
+    -   **EARS-1.1.2**: IF [a specific precondition is met] THEN the [system name] SHALL [have a specific property or state].
+
+    ### 2.2 [Major Feature Area 2]
+    ...
+
+    ## 3. Non-Functional Requirements
+    -   **Performance**: [Describe performance targets, e.g., response times.]
+    -   **Security**: [Describe security constraints or requirements.]
+    -   **Usability**: [Describe usability goals.]
+    ```
+
+3.  **Write to File**: Save the generated requirements to `.kiro/specs/{{feature_name}}/requirements.md`.
+4.  **Update Spec Status**: Update `spec.json` for '{{feature_name}}' to set `requirements.generated: true` and `phase: requirements-generated`.
+5.  **Instruct for Next Step**: Inform the user that `requirements.md` has been generated. Instruct them to review the file and, once they are satisfied, run the `/spec:design {{feature_name}}` command to proceed to the next phase.
+"""

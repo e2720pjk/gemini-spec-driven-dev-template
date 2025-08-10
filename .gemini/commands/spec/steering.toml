@@ -1,12 +1,41 @@
-description = "Analyzes the project and generates/updates core steering documents."
+description = "Analyzes the project, sets the default language, and generates/updates core steering documents. Handles both new and existing projects."
 prompt = """
-Analyze the entire project to create or update the steering documents (`product.md`, `tech.md`, `structure.md`).
+# Task: Set Project Language and Generate Steering Documents
 
+**Step 1: Determine Project Language**
+1.  Ask the user: "Please choose a default language for the project (e.g., English, Traditional Chinese, Japanese). This will be saved in `.kiro/config.json`. If you don't specify one, 'English' will be used."
+2.  Wait for the user's response.
+3.  Use the user's choice or default to 'English'.
+4.  Read the existing `.kiro/config.json` file.
+5.  Update or create the `language` field in the JSON with the chosen language.
+6.  Write the updated JSON back to `.kiro/config.json`.
+7.  Confirm to the user that the language has been set.
+
+**Step 2: Check Project Status**
+1.  Use the `list_directory` tool on the project root (`.`).
+2.  Count the number of files and directories returned.
+3.  **If the count is less than 5** (i.e., it's likely a new or empty project with just `.git`, `.`, `..`), proceed to **Step 3 (New Project Flow)**.
+4.  **Otherwise**, proceed to **Step 4 (Existing Project Flow)**.
+
+**Step 3: New Project Flow**
+1.  Inform the user that this looks like a new project and you will generate initial steering documents.
+2.  Ask the user for a high-level, one-sentence description of the project they want to build. (e.g., "A web service for tracking personal fitness goals.")
+3.  Based on the user's description and the chosen language, generate high-level, generic drafts for `product.md`, `tech.md`, and `structure.md`.
+    *   `product.md` should state the user's description as the primary goal.
+    *   `tech.md` should suggest a common, modern technology stack suitable for the project type. **Crucially, state that this is a preliminary suggestion and will be finalized during the `/spec:design` phase.**
+    *   `structure.md` should outline a standard project structure for that technology stack.
+4.  Proceed to **Step 5 (Request Approval)**.
+
+**Step 4: Existing Project Flow**
 1.  **Scan Project**: Use `glob` to find all relevant source code files (e.g., `*.js`, `*.py`, `package.json`, etc.).
 2.  **Read Files**: Use `read_many_files` to read the content of the scanned files.
 3.  **Analyze and Draft**:
     a.  First, check if `product.md`, `tech.md`, and `structure.md` already exist. If they do, read their content to use as a baseline.
-    b.  Analyze the project files and any existing steering content to generate updated drafts.
+    b.  Analyze the project files and any existing steering content to generate updated drafts. The generated content should be in the language set in Step 1.
+4.  Proceed to **Step 5 (Request Approval)**.
 
-4.  **Request Approval**: Present the drafts to the user for approval before writing them to the `.kiro/steering/` directory.
+**Step 5: Request Approval**
+1.  Present the generated drafts for `product.md`, `tech.md`, and `structure.md` to the user.
+2.  Ask for their approval before writing the files to the `.kiro/steering/` directory.
+3.  If approved, write the content to the respective files.
 """

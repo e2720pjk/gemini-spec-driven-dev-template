@@ -28,14 +28,7 @@ You are an AI assistant responsible for executing the implementation plan for th
         - Read the steering documents for context: `.kiro/steering/tech.md` and `.kiro/steering/structure.md`.
         - Read the implementation plan from `.kiro/specs/{{feature_name}}/tasks.md`.
         - Process `tasks.md` step-by-step. For each task:
-            - **a. Handle Documentation Tasks**:
-                i.  If the task description contains "Update `README.md`" or "Update documentation", then:
-                    - Read the project's `product.md`, `tech.md`, `structure.md` for context.
-                    - Read the feature's `requirements.md` and `design.md` for specific details.
-                    - Generate comprehensive content for `README.md` (or the relevant documentation file) based on all gathered context.
-                    - Use `write_file` to write the generated content to the appropriate file (e.g., `README.md`).
-            - **b. Execute other tasks**:
-                - Execute the required action (e.g., create files with `write_file`, modify code with `replace`, run build commands with `run_shell_command`).
+            - Execute the required action (e.g., create files with `write_file`, modify code with `replace`, run build commands with `run_shell_command`).
             - After successfully completing a task, update its status in `tasks.md` by changing its line from `- [ ]` to `- [x]`. Use the `replace` tool for this.
         - Update the `phase` in `spec.json` to `"implementation-in-progress"`.
 

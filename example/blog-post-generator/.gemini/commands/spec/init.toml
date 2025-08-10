@@ -11,11 +11,11 @@ You are an AI assistant responsible for managing software specifications. A user
 
 1.  **Analyze Project Description**: From the user's input (`{{args}}`), extract the core purpose and generate a concise, kebab-case, filesystem-friendly feature name (e.g., `user-authentication-flow`).
 2.  **Output Generated Feature Name**: Output the generated feature name as a single line of plain text. This output will be captured and used as `{{generated_feature_name}}` in subsequent steps.
-3.  **Determine the Language**:
-    a. Read the `.kiro/config.json` file.
-    b. If the file exists and contains a `language` field, use that language.
-    c. Otherwise, default to 'English'.
-    d. **Set the response language for this interaction**: Based on the determined language, set the response language for this interaction.
+3.  **Determine the Language (Do this first)**:
+    a. Check if the user specified a language (e.g., `/spec:init {{generated_feature_name}} japanese`).
+    b. If not, ask the user: "Please choose a language for the specification documents (e.g., English, Traditional Chinese, Japanese). If you don't specify one, 'English' will be used as the default." 
+    c. Use the user's choice or default to 'English'. Store this language choice for later.
+    d. **Set the response language for this interaction**: Based on the determined language, set the response language for this interaction. For example, if the language is 'Traditional Chinese', all responses should be in Traditional Chinese. If 'English', all responses should be in English.
 
 4.  **Check for Existing Specification**:
     a. Use the `list_directory` tool to check if the directory `.kiro/specs/{{generated_feature_name}}` already exists.

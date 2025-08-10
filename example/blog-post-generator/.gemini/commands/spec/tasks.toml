@@ -2,21 +2,19 @@ description = "Generates high-quality implementation tasks, with a configurable 
 prompt = """
 The user wants to generate tasks for '{{feature_name}}'.
 
-**Step 1: Determine Response Language**
-- Read `.kiro/specs/{{feature_name}}/spec.json` to get the `language` field. Set the response language for this interaction based on this field.
 
-**Step 2: Read Workflow Configuration**
+**Step 1: Read Workflow Configuration**
 - Read the file `.kiro/config.json` to determine the `approval_mode`.
 - If the file doesn't exist, default to `implicit` mode.
 
-**Step 3: Conditional Approval**
+**Step 2: Conditional Approval**
 - **IF `approval_mode` is `interactive`**:
   1. Ask the user for confirmation: "Have you reviewed and approved the `design.md` for `{{feature_name}}`? [y/N]"
   2. If the user responds with "y" or "yes", proceed. Otherwise, stop and instruct the user to review the design.
 - **ELSE (`approval_mode` is `implicit` or not set)**:
   1. Proceed directly to the next step without asking for confirmation.
 
-**Step 4: Approve Design & Generate Tasks (Proceeds after approval or implicitly)**
+**Step 3: Approve Design & Generate Tasks (Proceeds after approval or implicitly)**
 
 1.  **Approve Design in `spec.json`**:
     a.  Read `.kiro/specs/{{feature_name}}/spec.json`.
@@ -40,7 +38,6 @@ The user wants to generate tasks for '{{feature_name}}'.
     c.  Write the changes back.
 
 5.  **Instruct User for Next Step**:
-    a.  Inform the user that `tasks.md` has been generated successfully.
-    b.  Advise the user that the feature is now ready for implementation.
-    c.  Remind the user to run the command `/spec:run-tasks {{feature_name}}` to execute the implementation tasks automatically.
+    a.  Inform the user that `tasks.md` has been generated.
+    b.  State that the feature is now ready for implementation.
 """
