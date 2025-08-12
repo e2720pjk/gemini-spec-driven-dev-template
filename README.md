@@ -11,7 +11,7 @@
 To get started with the Gemini Spec-Driven Dev Template, follow these steps:
 
 1. **Integrate into Your Project**
-   Copy the `.gemini/`, `.kiro/`, `GEMINI.md`, and `README.md` (this file) from this template into the root directory of your target project.
+   Copy the `.gemini/`, `.kiro/`, and `GEMINI.md` from this template into the root directory of your target project.
 
 2. **(Optional) Configure Workflow**
    Edit `.kiro/config.json` to set your preferred `approval_mode` (e.g., `"implicit"` for streamlined, or `"interactive"` for explicit confirmation).
@@ -307,7 +307,7 @@ graph TD
 要開始使用 Gemini 規格驅動開發範本，請遵循以下步驟：
 
 1. **整合到您的專案中**
-   將 `.gemini/`、`.kiro/`、`GEMINI.md` 和 `README.md`（此檔案）從此範本複製到您的目標專案的根目錄。
+   將 `.gemini/`、`.kiro/` 和 `GEMINI.md` 從此範本複製到您的目標專案的根目錄。
 
 2. **（可選）配置工作流程**
    編輯 `.kiro/config.json` 以設定您偏好的 `approval_mode`（例如，`"implicit"` 用於簡化，或 `"interactive"` 用於明確確認）。
