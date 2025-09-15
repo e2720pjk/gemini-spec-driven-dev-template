@@ -1,5 +1,50 @@
 # Gemini Spec-Driven Dev Template
 
+## ⚠️ 專案停止更新通知 / Project Discontinuation Notice
+
+**中文**：本專案已停止更新和維護。我們強烈建議您使用更成熟且持續維護的 **[cc-sdd](https://github.com/gotalab/claude-code-spec)** 專案，這是本專案的原始啟發來源，功能更完整且支援多種 AI 開發工具。
+
+**English**: This project has been discontinued and is no longer maintained. We strongly recommend using the more mature and actively maintained **[cc-sdd](https://github.com/gotalab/claude-code-spec)** project, which is the original inspiration for this template and offers more complete functionality with support for multiple AI development tools.
+
+### 🚀 推薦替代方案 / Recommended Alternative
+
+**cc-sdd** 提供：
+- 🤖 **多 AI 工具支援**：Claude Code、Cursor IDE、Gemini CLI
+- 🌐 **多語言支援**：12種語言（英文、日文、繁體中文、簡體中文、西班牙文、葡萄牙文、德文、法文、俄文、義大利文、韓文、阿拉伯文）
+- ✨ **一鍵安裝**：`npx cc-sdd@latest`
+- 📋 **完整的 AI-DLC 工作流程**：要求 → 設計 → 任務 → 實作
+- 🎯 **專案記憶體**：AI 學習您的程式碼庫、模式和偏好
+- 📚 **Kiro IDE 相容性**：可與 Kiro IDE 無縫整合
+
+**cc-sdd** offers:
+- 🤖 **Multi-AI Tool Support**: Claude Code, Cursor IDE, Gemini CLI
+- 🌐 **Multi-Language Support**: 12 languages (English, Japanese, Traditional Chinese, Chinese, Spanish, Portuguese, German, French, Russian, Italian, Korean, Arabic)
+- ✨ **One-Command Installation**: `npx cc-sdd@latest`
+- 📋 **Complete AI-DLC Workflow**: Requirements → Design → Tasks → Implementation
+- 🎯 **Project Memory**: AI learns your codebase, patterns, and preferences
+- 📚 **Kiro IDE Compatibility**: Seamless integration with Kiro IDE
+
+### 快速開始 / Quick Start
+
+```bash
+# 安裝 cc-sdd / Install cc-sdd
+npx cc-sdd@latest
+
+# 支援多種選項 / Multiple options supported
+npx cc-sdd@latest --lang zh-TW --gemini-cli  # 繁體中文 + Gemini CLI
+npx cc-sdd@latest --lang ja --cursor         # 日文 + Cursor IDE
+```
+
+了解更多請訪問：[cc-sdd GitHub Repository](https://github.com/gotalab/cc-sdd)
+
+---
+
+## 📚 歷史資料 / Archive Documentation
+
+> ⚠️ **注意**：以下內容為原專案的歷史文檔，僅供參考。建議使用上述推薦的 cc-sdd 專案。
+>
+> **Notice**: The following content is archived documentation from the original project, provided for reference only. Please use the recommended cc-sdd project above.
+
 > 🌐 **Language**: [English](README.md) | [繁體中文](README_zh-TW.md)
 
 ---
